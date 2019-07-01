@@ -2,4 +2,8 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+#[cfg(not(feature = "manual"))]
+include!(concat!(env!("OUT_DIR"), "/auto_bindings.rs"));
+
+#[cfg(feature = "manual")]
+include!("manual_bindings.rs");

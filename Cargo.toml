@@ -4,9 +4,10 @@ version = "0.1.1"
 authors = ["Mathieu Tarral <mathieu.tarral@protonmail.com>"]
 edition = "2018"
 links = "xenstore"
-repository = "https://github.com/Wenzel/xen-sys"
+repository = "https://github.com/Wenzel/xenstore-sys"
 readme = "README.md"
 keywords = ["xen"]
+categories = ["external-ffi-bindings"]
 description = "Rust bindings for Xenstore"
 license = "GPL-3.0-only"
 licence-file = "LICENSE"
@@ -14,4 +15,8 @@ licence-file = "LICENSE"
 [dependencies]
 
 [build-dependencies]
-bindgen = "0.49.2"
+bindgen = { version = "0.49.3", optional = true }
+
+[features]
+default = ["bindgen"]   # Bindings will be generated automatically by bindgen
+manual = []             # Bindings will be generated manually

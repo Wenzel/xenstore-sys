@@ -6,7 +6,7 @@ use std::path::PathBuf;
 fn main() {
     // what library to link with
     println!("cargo:rustc-link-lib=static=xenstore");
-    // println!("cargo:rustc-link-search=native=/usr/lib/x86_64-linux-gnu");
+    println!("cargo:rustc-link-search=native=/usr/lib/x86_64-linux-gnu");
 
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for

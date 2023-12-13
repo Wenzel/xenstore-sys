@@ -23,4 +23,4 @@ jobs:
 
       - run: sudo apt-get install -y libxen-dev
 
-      - run: cargo ${{ matrix.subcommand }}
+      - run: cargo ${{ matrix.subcommand }} -v

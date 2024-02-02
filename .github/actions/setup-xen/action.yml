@@ -1,0 +1,34 @@
+name: "Setup Xen development headers"
+description: "Installs Xen haeders from source"
+author: "Mathieu Tarral"
+runs:
+  using: "composite"
+  steps:
+    - name: Install required dependencies
+      run: |
+        brew install ossp-uuid
+      shell: bash
+
+    - name: Configure Environment Variables
+      run: |
+        echo "CPPFLAGS=-I/opt/homebrew/include" >> $GITHUB_ENV
+        echo "LDFLAGS=-L/opt/homebrew/lib" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Clone Xen
+      uses: actions/checkout@v4
+      with:
+        repository: "xen-project/xen"
+        ref: RELEASE-4.16.0
+        path: ./xenbuild
+
+    - name: Configure, build and install Xen
+      run: |
+        ./configure --disable-docs --disable-stubdom --disable-pvshim
+      working-directory: ./xenbuild/tools
+      shell: bash
+
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        path: ./xenbuild/config.log

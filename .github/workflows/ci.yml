@@ -8,17 +8,22 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         subcommand: ['build', 'clippy', 'test']
         feature: ['', 'static']
+        os: ['ubuntu-22.04', 'macos-14']
     steps:
       - uses: actions/checkout@v4
 
       - uses: dtolnay/rust-toolchain@stable
 
       - run: sudo apt-get install -y libxen-dev
+        if: matrix.os == 'ubuntu-22.04'
+
+      - uses: ./.github/actions/setup-xen
+        if: matrix.os == 'macos-14'
 
       - run: |
           if [ -z "${{ matrix.feature }}" ]; then
